@@ -44,8 +44,17 @@ public class FrontCompression {
         /*
          * Complete this function.
          */
+        String[] wordArray = corpus.split("\n");
+        String prev = wordArray[0];
+        String compressed = wordArray[0];
+        for (int  i = 1; i < wordArray.length; i++) {
+            String current = wordArray[i];
+            int common = longestPrefix(prev, current);
+            compressed += "\n" + common + " " + current.substring(common, current.length());
+            prev = current;
+        }
 
-        return "";
+        return compressed;
     }
 
     /**
@@ -67,8 +76,20 @@ public class FrontCompression {
         /*
          * Complete this function.
          */
+        String[] wordArray = corpus.split("\n");
+        String prev = wordArray[0];
+        String decompressed = wordArray[0];
+        for (int i = 1; i < wordArray.length; i++) {
+            String[] components = wordArray[i].split(" ");
+            String current = components[1];
+            int common = Integer.parseInt(components[0]);
+            String decompressedWord = prev.substring(0, common) + current;
+            decompressed += "\n" + decompressedWord;
+            prev = decompressedWord;
+        }
+        System.out.println(decompressed);
 
-        return "";
+        return decompressed;
     }
 
     /**
@@ -82,7 +103,14 @@ public class FrontCompression {
         /*
          * Complete this function.
          */
-        return 0;
+        int i = 0;
+        while (i < firstString.length() && i < secondString.length()) {
+            if (!(firstString.charAt(i) == secondString.charAt(i))) {
+                break;
+            }
+            i++;
+        }
+        return i;
     }
 
     /**
@@ -138,6 +166,8 @@ public class FrontCompression {
                 } else {
                     System.out.println("Original and decompressed files " //
                             + "have different line endings.");
+                    System.out.println(originalWordsArray.length);
+                    System.out.println(decompressedWordsArray.length);
                 }
             }
         }
